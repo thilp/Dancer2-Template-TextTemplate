@@ -9,7 +9,7 @@ use utf8;
 # VERSION
 
 use Moo;
-use MooX::Types::MooseLike::Base qw( Bool ArrayRef Int Str );
+use MooX::Types::MooseLike::Base qw( InstanceOf Bool ArrayRef Int Str );
 use Carp 'croak';
 use Text::Template;
 use CHI;
@@ -40,7 +40,7 @@ an open interface is always better than a predefined one!
 
 has _cache => (
     is      => 'rwp',
-    isa     => 'CHI::Driver',
+    isa     => InstanceOf['CHI::Driver'],
     lazy    => 1,
     builder => 1,
 );
@@ -95,7 +95,7 @@ Defaults to C<< [ '{', '}' ] >>.
 
 has delimiters => (
     is      => 'rw',
-    isa     => ArrayRef [Str],
+    isa     => ArrayRef[Str],
     default => sub { [ '{', '}' ] },
 );
 
