@@ -57,7 +57,7 @@ has '+engine' =>
 sub _build_engine {
     my $self = shift;
     my $engine = Dancer2::Template::TextTemplate::FakeEngine->new;
-    for my $param (qw/ caching expires delimiters /) {
+    for (qw/ caching expires delimiters /) {
         $engine->$_($self->config->{$_}) if $self->config->{$_};
     }
     return $engine;

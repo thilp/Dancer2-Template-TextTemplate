@@ -42,7 +42,7 @@ has _cache => (
     is      => 'rwp',
     isa     => InstanceOf['CHI::Driver'],
     lazy    => 1,
-    builder => 1,
+    builder => '_build_cache',
 );
 
 sub _build_cache {
@@ -50,7 +50,7 @@ sub _build_cache {
     return CHI->new(
         driver             => 'Memory',    # THIS should be generalized
         expires_on_backend => 1,
-        expires_in => $self->expires > 0 ? $self->expires : 'never',
+        global             => 1,           # CHI::Driver::Memory-specific
     );
 }
 
@@ -99,6 +99,26 @@ has delimiters => (
     default => sub { [ '{', '}' ] },
 );
 
+=attr cache_stringrefs
+
+If this attribute and C<caching> are true (which is the default),
+string-ref-templates will always be cached forever (since they cannot become
+I<invalid>, contrary to template files that can be changed on disc when
+FakeEngine doesn't watch).
+
+However, you may want to disable this behavior for string-ref-templates if you
+use a lot of such templates only once (they would fill your cache). By setting
+C<cache_stringrefs> to C<0>, you tell FakeEngine not to cache (at all) your
+string-ref-templates.
+
+=cut
+
+has cache_stringrefs => (
+    is      => 'rw',
+    isa     => Bool,
+    default => 1,
+);
+
 =method process( $template, \%tokens )
 
 Computes the C<$template> according to specified C<\%tokens>.
@@ -112,7 +132,7 @@ Note that, if C<caching> is true, (dereferenced) string references will be
 cached too.
 
 This methods simply gets a Text::Template instance (either from cache or by
-instanciating it) and calls C<< Text::Template::fill_in( HASH => \%tokens ) >>
+instantiating it) and calls C<< Text::Template::fill_in( HASH => \%tokens ) >>
 on it, returning the result.
 
 If an error occurs in Text::Template, this method returns C<undef>, sets
@@ -143,8 +163,16 @@ sub process {
     my $computed = $tt->fill_in( HASH => $tokens )
       or our $ERROR = $Text::Template::ERROR;
 
-    if ( $computed && $self->caching ) {
-        $self->_cache->set( ref $template ? $$template : $template, $tt );
+    if ( defined $computed && $self->caching ) {
+        if ( ref $template ) {    # string refs (never expire)
+            $self->_cache->set( $$template, $tt, 'never' );
+        }
+        else {                    # filenames
+            $self->_cache->set( $template, $tt,
+                $self->expires > 0
+                ? ( expires_in => $self->expires )
+                : 'never' );
+        }
     }
 
     return $computed;
