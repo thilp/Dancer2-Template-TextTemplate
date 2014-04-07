@@ -20,17 +20,24 @@ use namespace::clean;
 
 =head1 DESCRIPTION
 
-With L<Template::Toolkit>-like engines, you instanciate I<one> engine to
+With L<Template::Toolkit>-like engines, you instantiate I<one> engine to
 process I<multiple> templates.
-With L<Text::Template>, you instanciate I<one> engine to process I<one>
+With L<Text::Template>, you instantiate I<one> engine to process I<one>
 template.
 This class is a simple wrapper around Text::Template to simplify its use as a
 template engine in L<Dancer2>. It basically just manage Text::Template
 instances (and their expiration) through L<CHI>.
 
+You can give this engine templates as filenames or string references:
+
+=for :list
+* with a filename, the corresponding file will be read by L<Text::Template>;
+* a string ref will be dereferenced and its content used as the template
+  content itself.
+
 =cut
 
-=comment
+=for :comment
 
 This is our cache. We should gather CHI-related options from config.yml to
 support other caching methods like Memcached. That sounds overkill to me, but
