@@ -24,6 +24,9 @@ To use this engine, you may configure L<Dancer2> via C<config.yml>:
 
 =head1 DESCRIPTION
 
+B<This is an alpha version: it basically works, but it has not been
+extensively tested and it misses interesting features.>
+
 This template engine allows you to use L<Text::Template> in L<Dancer2>.
 
 Contrary to other template engines (like L<Template::Toolkit>), where I<one>
