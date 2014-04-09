@@ -118,7 +118,7 @@ non-dying, side-effects-free Perl expression to `prepend`, like `0` or
 This option (enabled by default) makes your templates to be evaluated in a
 [Safe](https://metacpan.org/pod/Safe) compartment, i.e. where some potentially dangerous operations (such as
 `system`) are disabled. Note that the same Safe compartment will be used to
-evaluate all your templates, unless you explicitely specify `safe_disposable:
+evaluate all your templates, unless you explicitly specify `safe_disposable:
 1` (one compartment per template _evaluation_).
 
 This Safe uses the `:default` opcode set (see [the Opcode
