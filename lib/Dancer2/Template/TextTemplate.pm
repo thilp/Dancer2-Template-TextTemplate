@@ -105,7 +105,7 @@ L<Carp|Croak>s if an error occurs.
 
 sub render {
     my ( $self, $template, $tokens ) = @_;
-    return $self->engine->process( $template, $tokens )
+    $self->engine->process( $template, $tokens )
       or croak $Dancer2::Template::TextTemplate::FakeEngine::ERROR;
 }
 
