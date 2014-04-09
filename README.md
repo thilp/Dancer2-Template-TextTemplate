@@ -4,7 +4,7 @@ Dancer2::Template::TextTemplate - Text::Template engine for Dancer2
 
 # VERSION
 
-version 0.2
+version 0.3
 
 # SYNOPSIS
 
@@ -113,8 +113,6 @@ If you don't want anything prepended to your templates, simply give a
 non-dying, side-effects-free Perl expression to `prepend`, like `0` or
 `""`.
 
-## Running in a [Safe](https://metacpan.org/pod/Safe) - `safe`, `safe_opcodes`, `safe_disposable`
-
 # METHODS
 
 ## render( $template, \\%tokens )
@@ -131,6 +129,8 @@ Renders the template.
     `Text::Template::fill_in`.
 
 [Carp](https://metacpan.org/pod/Croak)s if an error occurs.
+
+## Running in a [Safe](https://metacpan.org/pod/Safe) - `safe`, `safe_opcodes`, `safe_disposable`
 
 This option (enabled by default) makes your templates to be evaluated in a
 [Safe](https://metacpan.org/pod/Safe) compartment, i.e. where some potentially dangerous operations (such as
