@@ -11,7 +11,7 @@ use utf8;
 use Moo;
 use MooX::Types::MooseLike::Base qw( InstanceOf Bool ArrayRef Int Str );
 use Carp 'croak';
-use Text::Template;
+use Text::Template 1.46;
 use CHI;
 use Scalar::Util 'blessed';
 use namespace::clean;
