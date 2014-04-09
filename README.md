@@ -34,7 +34,9 @@ their __default__ values:
             prepend: |
                 use strict;
                 use warnings;
-            safe: 0                     # currently a no-op
+            safe: 1
+            safe_opcodes: [ ":default" ]
+            safe_disposable: 0
 
 The following sections explain what these options do.
 
@@ -100,7 +102,7 @@ is the same as evaluating:
         ""
     }you're the { $a + 1 }th visitor!
 
-and thus you get:
+and thus you'd get:
 
     Program fragment delivered error
     ``Use of uninitialized value $a in addition (+) [...]
@@ -111,9 +113,24 @@ If you don't want anything prepended to your templates, simply give a
 non-dying, side-effects-free Perl expression to `prepend`, like `0` or
 `""`.
 
-## Running in a [Safe](https://metacpan.org/pod/Safe) - `safe`
+## Running in a [Safe](https://metacpan.org/pod/Safe) - `safe`, `safe_opcodes`, `safe_disposable`
 
-Not yet implemented!
+This option (enabled by default) makes your templates to be evaluated in a
+[Safe](https://metacpan.org/pod/Safe) compartment, i.e. where some potentially dangerous operations (such as
+`system`) are disabled. Note that the same Safe compartment will be used to
+evaluate all your templates, unless you explicitely specify `safe_disposable:
+1` (one compartment per template _evaluation_).
+
+This Safe uses the `:default` opcode set (see [the Opcode
+documentation](https://metacpan.org/pod/Opcode#Predefined-Opcode-Tags), unless
+you specify it otherwise with the `safe_opcodes` option. You can, of course,
+mix opcodes and optags, as in:
+
+    safe_opcodes:
+        - ":default"
+        - "time"
+
+which enables the default opcode set _and_ `time`.
 
 # METHODS
 
