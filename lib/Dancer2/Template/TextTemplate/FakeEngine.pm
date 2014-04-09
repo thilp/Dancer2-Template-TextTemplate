@@ -171,7 +171,7 @@ sub process {
       or our $ERROR = $Text::Template::ERROR;
 
     if ( defined $computed && $self->caching ) {
-        if ( ref $template ) {    # string refs (never expire)
+        if ( ref $template && $self->cache_stringrefs ) {
             $self->_cache->set( $$template, $tt, 'never' );
         }
         else {                    # filenames
