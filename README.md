@@ -115,6 +115,23 @@ non-dying, side-effects-free Perl expression to `prepend`, like `0` or
 
 ## Running in a [Safe](https://metacpan.org/pod/Safe) - `safe`, `safe_opcodes`, `safe_disposable`
 
+# METHODS
+
+## render( $template, \\%tokens )
+
+Renders the template.
+
+- `$template` is either a (string) filename for the template file or a
+
+    reference to a string that contains the template.
+
+- `\%tokens` is a hashref for the tokens you wish to pass to
+
+    [Text::Template](https://metacpan.org/pod/Text::Template) for rendering, as if you were using
+    `Text::Template::fill_in`.
+
+[Carp](https://metacpan.org/pod/Croak)s if an error occurs.
+
 This option (enabled by default) makes your templates to be evaluated in a
 [Safe](https://metacpan.org/pod/Safe) compartment, i.e. where some potentially dangerous operations (such as
 `system`) are disabled. Note that the same Safe compartment will be used to
@@ -135,25 +152,6 @@ which enables the default opcode set _and_ `time`.
 __Be careful__ with the opcodes you allow/forbid: for instance, if you don't
 allow `require`, you will break the default value of the `prepend` option
 (which calls `use`).
-
-# METHODS
-
-## render( $template, \\%tokens )
-
-Renders the template.
-
-- `$template` is either a (string) filename for the template file or a
-
-    reference to a string that contains the template.
-
-- `\%tokens` is a hashref for the tokens you wish to pass to
-
-    [Text::Template](https://metacpan.org/pod/Text::Template) for rendering, as if you were using
-    `Text::Template::fill_in`.
-
-[Carp](https://metacpan.org/pod/Croak)s if an error occurs.
-
-optags
 
 # AUTHOR
 
