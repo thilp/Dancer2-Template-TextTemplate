@@ -2,6 +2,11 @@ Revision history for Dancer2-Template-TextTemplate
 
 {{$NEXT}}
 
+    - cache_stringrefs option implemented
+    - prepend option implemented
+    - fixed a bug in render()'s return value that warns only in perl-5.19.x
+    - improved build system (more tests, cpanfile)
+
 0.1       2014-04-09 05:10:53+02:00 Europe/Paris
 
     - first version, not tested enough
