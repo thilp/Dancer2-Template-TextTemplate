@@ -1,4 +1,4 @@
-use Test::More tests => 16;
+use Test::More tests => 18;
 use Test::API;
 use Test::Fatal;
 use File::Temp ();
@@ -63,6 +63,14 @@ is $e->process( $template_file, $template_args ), $expected_string,
 
 is $e->process( \$template_string, $template_args ), $expected_string,
   'template strings are correctly computed';
+
+{
+    my $tmp_str = "1 2 3";
+    is( exception { $e->process( \$tmp_str ) },
+        undef, 'omiting args hashref (when the template uses no arg) lives' );
+    is $e->process( \$tmp_str ), $tmp_str,
+      'omiting args hashref (when the template uses no arg) works';
+}
 
 # Now we change the content of $template_file. The process() result must have
 # changed alike, as we have disabled caching.
