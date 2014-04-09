@@ -83,25 +83,33 @@ Text::Template. This option defaults to `{` and `}`, meaning that in `a
 ## Prepending code - `prepend`
 
 This option specifies Perl code run by Text::Template _before_ evaluating
-each template. For instance, with this option's default value of:
+each template. For instance, with this option's default value, i.e.:
 
     use strict;
-    use warnings;
+    use warnings FATAL => 'all';
 
 then evaluating the following template:
 
-    hello { $a = 'you' }
+    you're the { $a + 1 }th visitor!
 
 is the same as evaluating:
 
     {
         use strict;
-        use warnings;
+        use warnings FATAL => 'all';
         ""
-    }
-    hello { $a = 'you' }
+    }you're the { $a + 1 }th visitor!
 
-and thus you'll get a warning if `$a` is uninitialized.
+and thus you get:
+
+    Program fragment delivered error
+    ``Use of uninitialized value $a in addition (+) [...]
+
+in your template output if you forgot to pass a value for `$a`.
+
+If you don't want anything prepended to your templates, simply give a
+non-dying, side-effects-free Perl expression to `prepend`, like `0` or
+`""`.
 
 ## Running in a [Safe](https://metacpan.org/pod/Safe) - `safe`
 
