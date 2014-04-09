@@ -36,6 +36,7 @@ my %WriteMakefileArgs = (
   },
   "TEST_REQUIRES" => {
     "File::Temp" => 0,
+    "IPC::System::Simple" => 0,
     "Test::API" => 0,
     "Test::Fatal" => 0,
     "Test::More" => "0.88",
@@ -54,6 +55,7 @@ my %FallbackPrereqs = (
   "Dancer2::Core::Role::Template" => 0,
   "Dancer2::Core::Types" => 0,
   "File::Temp" => 0,
+  "IPC::System::Simple" => 0,
   "Moo" => 0,
   "MooX::Types::MooseLike::Base" => 0,
   "Safe" => "2.14",
