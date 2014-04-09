@@ -153,6 +153,8 @@ Renders the template.
 
 [Carp](https://metacpan.org/pod/Croak)s if an error occurs.
 
+optags
+
 # AUTHOR
 
 Thibaut Le Page <thilp@cpan.org>
