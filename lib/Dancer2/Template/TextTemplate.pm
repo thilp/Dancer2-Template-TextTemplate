@@ -29,6 +29,27 @@ extensively tested and it misses interesting features.>
 
 This template engine allows you to use L<Text::Template> in L<Dancer2>.
 
+=head2 Configuration
+
+Here are all available options, as you would set them in a C<config.yml>, with
+their B<default> values:
+
+    template: text_template
+    engines:
+        text_template:
+            caching: 1
+            expires: 3600               # in seconds; use 0 to disable
+            cache_stringrefs: 1
+            delimiters: [ "{", "}" ]
+            prepend: |
+                use strict;
+                use warnings;
+            safe: 0                     # currently a no-op
+
+The following sections explain what these options do.
+
+=head2 Global caching - C<caching>, C<expires>
+
 Contrary to other template engines (like L<Template::Toolkit>), where I<one>
 instance may work on I<multiple> templates, I<one> L<Text::Template> instance
 is created I<for each> template. Therefore, if:
@@ -43,32 +64,67 @@ L<CHI>) B<by default>.
 
 If you're OK with caching, you should specify a B<timeout> (C<expires>) after
 which cached Text::Template instances are to be refreshed, since you might
-have changed your template sources without restarting Dancer2. Use the value
-C<0> to tell the engine that templates never expire.
+have changed your template sources without restarting Dancer2. By default,
+this engine uses C<expires: 3600> (one hour). Use C<0> to tell it that
+templates never expire.
 
-To enable caching in your C<config.yml>:
+If you don't want any caching, just set C<caching> to C<0>.
 
-    template: text_template
-    engines:
-        text_template:
-            caching: 1                  # default
-            expires: 3600               # in seconds; default; 0 to disable
-            cache_stringrefs: 1         # default
-            delimiters: [ "{", "}" ]    # default
+=head2 "String-ref templates" caching - C<cache_stringrefs>
 
 Just like with L<Dancer2::Template::Toolkit>, you can pass templates either as
 filenames (for a template file) or string references ("string-refs", which are
 dereferenced and used as the template's content). In some cases, you may want
-to disable caching just for string-refs: for instance, if you generate a lot
+to disable caching for string-refs only: for instance, if you generate a lot
 of templates on-the-fly and use them only once, caching them is useless and
-fills your cache. You can therefore disable caching for string-refs only by
+fills your cache. You can therefore disable caching I<for string-refs only> by
 setting C<cache_stringrefs> to C<0>.
+
+Note that if you set C<caching> to C<0>, you don't have I<any> caching, so
+C<cache_stringrefs> is ignored.
+
+=head2 Custom delimiters - C<delimiters>
 
 The C<delimiters> option allows you to specify a custom delimiters pair
 (opening and closing) for your templates. See the L<Text::Template>
 documentation for more about delimiters, since this module just pass them to
 Text::Template. This option defaults to C<{> and C<}>, meaning that in C<< a
 {b} c >>, C<b> (and only C<b>) will be interpolated.
+
+=head2 Prepending code - C<prepend>
+
+This option specifies Perl code run by Text::Template I<before> evaluating
+each template. For instance, with this option's default value, i.e.:
+
+    use strict;
+    use warnings FATAL => 'all';
+
+then evaluating the following template:
+
+    you're the { $a + 1 }th visitor!
+
+is the same as evaluating:
+
+    {
+        use strict;
+        use warnings FATAL => 'all';
+        ""
+    }you're the { $a + 1 }th visitor!
+
+and thus you get:
+
+    Program fragment delivered error
+    ``Use of uninitialized value $a in addition (+) [...]
+
+in your template output if you forgot to pass a value for C<$a>.
+
+If you don't want anything prepended to your templates, simply give a
+non-dying, side-effects-free Perl expression to C<prepend>, like C<0> or
+C<"">.
+
+=head2 Running in a L<Safe> - C<safe>
+
+Not yet implemented!
 
 =cut
 
