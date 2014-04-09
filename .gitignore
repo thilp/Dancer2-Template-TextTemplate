@@ -2,3 +2,4 @@
 .build/
 Dancer2-Template-TextTemplate-*
 .gitnxtver_cache
+local/
