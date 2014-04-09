@@ -15,8 +15,6 @@ use namespace::clean;
 
 with 'Dancer2::Core::Role::Template';
 
-=for :stopwords optags
-
 =head1 SYNOPSIS
 
 To use this engine, you may configure L<Dancer2> via C<config.yml>:
@@ -161,16 +159,12 @@ sub _build_engine {
 
 Renders the template.
 
-=begin :list
-
+=for :list
 * C<$template> is either a (string) filename for the template file or a
-reference to a string that contains the template.
-
+  reference to a string that contains the template.
 * C<\%tokens> is a hashref for the tokens you wish to pass to
-L<Text::Template> for rendering, as if you were using
-C<Text::Template::fill_in>.
-
-=end :list
+  L<Text::Template> for rendering, as if you were using
+  C<Text::Template::fill_in>.
 
 L<Carp|Croak>s if an error occurs.
 

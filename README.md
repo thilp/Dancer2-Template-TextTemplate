@@ -14,9 +14,6 @@ To use this engine, you may configure [Dancer2](https://metacpan.org/pod/Dancer2
 
 # DESCRIPTION
 
-__This is an alpha version: it basically works, but it has not been
-extensively tested and it misses interesting features.__
-
 This template engine allows you to use [Text::Template](https://metacpan.org/pod/Text::Template) in [Dancer2](https://metacpan.org/pod/Dancer2).
 
 ## Configuration
@@ -121,8 +118,8 @@ This option (enabled by default) makes your templates to be evaluated in a
 evaluate all your templates, unless you explicitly specify `safe_disposable:
 1` (one compartment per template _evaluation_).
 
-This Safe uses the `:default` opcode set (see [the Opcode
-documentation](https://metacpan.org/pod/Opcode#Predefined-Opcode-Tags), unless
+This Safe uses the `:default` and `:load` opcode sets (see [the Opcode
+documentation](https://metacpan.org/pod/Opcode#Predefined-Opcode-Tags)), unless
 you specify it otherwise with the `safe_opcodes` option. You can, of course,
 mix opcodes and optags, as in:
 
@@ -130,11 +127,9 @@ mix opcodes and optags, as in:
         - ":default"
         - "time"
 
-which enables the default opcode set _and_ `time`.
-
-__Be careful__ with the opcodes you allow/forbid: for instance, if you don't
-allow `require`, you will break the default value of the `prepend` option
-(which calls `use`).
+which enables the default opcode set _and_ `time`. But __be careful__: with
+the previous example for instance, you don't allow `require`, and thus break
+the default value of the `prepend` option (which contains `use`)!
 
 # METHODS
 
@@ -142,14 +137,8 @@ allow `require`, you will break the default value of the `prepend` option
 
 Renders the template.
 
-- `$template` is either a (string) filename for the template file or a
-
-    reference to a string that contains the template.
-
-- `\%tokens` is a hashref for the tokens you wish to pass to
-
-    [Text::Template](https://metacpan.org/pod/Text::Template) for rendering, as if you were using
-    `Text::Template::fill_in`.
+- `$template` is either a (string) filename for the template file or a reference to a string that contains the template.
+- `\%tokens` is a hashref for the tokens you wish to pass to [Text::Template](https://metacpan.org/pod/Text::Template) for rendering, as if you were using `Text::Template::fill_in`.
 
 [Carp](https://metacpan.org/pod/Croak)s if an error occurs.
 
