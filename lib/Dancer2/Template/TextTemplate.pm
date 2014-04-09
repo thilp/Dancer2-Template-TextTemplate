@@ -15,6 +15,8 @@ use namespace::clean;
 
 with 'Dancer2::Core::Role::Template';
 
+=for :stopwords optags
+
 =head1 SYNOPSIS
 
 To use this engine, you may configure L<Dancer2> via C<config.yml>:
@@ -124,8 +126,6 @@ non-dying, side-effects-free Perl expression to C<prepend>, like C<0> or
 C<"">.
 
 =head2 Running in a L<Safe> - C<safe>, C<safe_opcodes>, C<safe_disposable>
-
-=for :stopwords optags
 
 This option (enabled by default) makes your templates to be evaluated in a
 L<Safe> compartment, i.e. where some potentially dangerous operations (such as
