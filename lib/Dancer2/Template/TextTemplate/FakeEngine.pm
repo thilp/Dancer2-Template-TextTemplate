@@ -177,7 +177,7 @@ sub process {
         else {                    # filenames
             $self->_cache->set( $template, $tt,
                 $self->expires > 0
-                ? ( expires_in => $self->expires )
+                ? { expires_in => $self->expires }
                 : 'never' );
         }
     }
