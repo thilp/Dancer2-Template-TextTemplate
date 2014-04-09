@@ -35,7 +35,7 @@ their __default__ values:
                 use strict;
                 use warnings;
             safe: 1
-            safe_opcodes: [ ":default" ]
+            safe_opcodes: [ ":default", ":load" ]
             safe_disposable: 0
 
 The following sections explain what these options do.
@@ -131,6 +131,10 @@ mix opcodes and optags, as in:
         - "time"
 
 which enables the default opcode set _and_ `time`.
+
+__Be careful__ with the opcodes you allow/forbid: for instance, if you don't
+allow `require`, you will break the default value of the `prepend` option
+(which calls `use`).
 
 # METHODS
 
