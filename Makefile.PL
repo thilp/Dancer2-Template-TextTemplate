@@ -3,7 +3,7 @@
 use strict;
 use warnings;
 
-use 5.010001;
+use 5.008_009;
 
 use ExtUtils::MakeMaker 6.30;
 
@@ -32,7 +32,6 @@ my %WriteMakefileArgs = (
     "Text::Template" => "1.46",
     "namespace::clean" => 0,
     "strict" => 0,
-    "utf8" => 0,
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
@@ -66,7 +65,6 @@ my %FallbackPrereqs = (
   "autodie" => 0,
   "namespace::clean" => 0,
   "strict" => 0,
-  "utf8" => 0,
   "warnings" => 0
 );
 
