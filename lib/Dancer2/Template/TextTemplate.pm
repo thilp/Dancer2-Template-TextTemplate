@@ -44,7 +44,9 @@ their B<default> values:
             prepend: |
                 use strict;
                 use warnings;
-            safe: 0                     # currently a no-op
+            safe: 1
+            safe_opcodes: [ ":default", ":load" ]
+            safe_disposable: 0
 
 The following sections explain what these options do.
 
@@ -111,7 +113,7 @@ is the same as evaluating:
         ""
     }you're the { $a + 1 }th visitor!
 
-and thus you get:
+and thus you'd get:
 
     Program fragment delivered error
     ``Use of uninitialized value $a in addition (+) [...]
@@ -122,9 +124,30 @@ If you don't want anything prepended to your templates, simply give a
 non-dying, side-effects-free Perl expression to C<prepend>, like C<0> or
 C<"">.
 
-=head2 Running in a L<Safe> - C<safe>
+=head2 Running in a L<Safe> - C<safe>, C<safe_opcodes>, C<safe_disposable>
 
-Not yet implemented!
+=for :stopwords optags
+
+This option (enabled by default) makes your templates to be evaluated in a
+L<Safe> compartment, i.e. where some potentially dangerous operations (such as
+C<system>) are disabled. Note that the same Safe compartment will be used to
+evaluate all your templates, unless you explicitly specify C<safe_disposable:
+1> (one compartment per template I<evaluation>).
+
+This Safe uses the C<:default> opcode set (see L<the Opcode
+documentation|https://metacpan.org/pod/Opcode#Predefined-Opcode-Tags>, unless
+you specify it otherwise with the C<safe_opcodes> option. You can, of course,
+mix opcodes and optags, as in:
+
+    safe_opcodes:
+        - ":default"
+        - "time"
+
+which enables the default opcode set I<and> C<time>.
+
+B<Be careful> with the opcodes you allow/forbid: for instance, if you don't
+allow C<require>, you will break the default value of the C<prepend> option
+(which calls C<use>).
 
 =cut
 

@@ -15,11 +15,10 @@ BEGIN {
 
 class_api_ok $module, qw{
     new
-    caching
-    expires
+    caching expires cache_stringrefs
     delimiters
-    cache_stringrefs
     prepend
+    safe safe_opcodes safe_disposable
     process
 };
 

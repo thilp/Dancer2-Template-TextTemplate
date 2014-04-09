@@ -13,6 +13,7 @@ use MooX::Types::MooseLike::Base qw( InstanceOf Bool ArrayRef Int Str );
 use Carp 'croak';
 use Text::Template 1.46;
 use CHI;
+use Safe 2.14;
 use Scalar::Util 'blessed';
 use namespace::clean;
 
@@ -162,6 +163,59 @@ sub _declare_arg_variables {
     return join "\n" => map { "our $_;" } @decls;
 }
 
+=attr safe, safe_opcodes, safe_disposable
+
+These attributes are directly linked to the eponymous options in
+L<Dancer2::Template::TextTemplate>.
+
+=cut
+
+has safe => (
+    is      => 'rw',
+    isa     => Bool,
+    default => 1,
+);
+
+has safe_opcodes => (
+    is      => 'rw',
+    isa     => ArrayRef[Str],
+    default => sub { [qw[ :default :load ]] },
+    trigger => sub {
+        my $self = shift;
+        $self->_safe->permit_only(@{ $_[0] });
+    },
+);
+
+has safe_disposable => (
+    is      => 'rw',
+    isa     => Bool,
+    default => 0,
+    trigger => sub {
+        my $self = shift;
+        $self->_rebuild_safe if $_[0];
+    },
+);
+
+has _safe => (
+    is      => 'rw',
+    isa     => InstanceOf['Safe'],
+    lazy    => 1,
+    builder => '_build_safe',
+);
+
+sub _build_safe {
+    my $self = shift;
+    my $safe = Safe->new;
+    $safe->permit_only(@{ $self->safe_opcodes });
+    return $safe;
+}
+
+sub _rebuild_safe {
+    my $self = shift;
+    $self->_safe($self->_build_safe) if $self->safe_disposable;
+    return;
+}
+
 =method process( $template, \%tokens )
 
 Computes the C<$template> according to specified C<\%tokens>.
@@ -205,8 +259,11 @@ sub process {
 
     my $computed = $tt->fill_in(
         HASH    => $tokens,
-        PREPEND => $self->prepend . _declare_arg_variables($tokens)
+        PREPEND => $self->prepend . _declare_arg_variables($tokens),
+        $self->safe ? ( SAFE => $self->_safe ) : (),
     ) or our $ERROR = $Text::Template::ERROR;
+
+    $self->_rebuild_safe if $self->safe && $self->safe_disposable;
 
     if ( defined $computed && $self->caching ) {
         if ( ref $template && $self->cache_stringrefs ) {
