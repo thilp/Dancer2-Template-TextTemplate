@@ -126,6 +126,42 @@ has cache_stringrefs => (
     default => 1,
 );
 
+=attr prepend
+
+Contains the string of Perl code added at the top of each evaluated template.
+See L<PREPEND in
+Text::Template|https://metacpan.org/pod/Text::Template#PREPEND-feature-and-using-strict-in-templates>.
+
+=cut
+
+has prepend => (
+    is => 'rw',
+    isa => Str,
+    default => <<'END',
+        use strict;
+        use warnings FATAL => 'all';
+END
+);
+
+# Text::Template's HASH variables (as exclusively used by FakeEngine) are not
+# installed in the template evaluation package in a "use strict"-compatible
+# way, but we enforce "use strict" in PREPEND, so we need to declare ourselves
+# these variables just after the PREPENDed code.
+sub _declare_arg_variables {
+    my $hash = shift;
+    my @decls;
+    while ( my ( $name, $value ) = each %$hash ) {
+        next unless defined $value;
+        push @decls, do {
+            if    ( ref $value eq 'ARRAY' ) { '@' }
+            elsif ( ref $value eq 'HASH' )  { '%' }
+            else                            { '$' }
+          }
+          . $name;
+    }
+    return join "\n" => map { "our $_;" } @decls;
+}
+
 =method process( $template, \%tokens )
 
 Computes the C<$template> according to specified C<\%tokens>.
@@ -167,8 +203,10 @@ sub process {
         );
     }
 
-    my $computed = $tt->fill_in( HASH => $tokens )
-      or our $ERROR = $Text::Template::ERROR;
+    my $computed = $tt->fill_in(
+        HASH    => $tokens,
+        PREPEND => $self->prepend . _declare_arg_variables($tokens)
+    ) or our $ERROR = $Text::Template::ERROR;
 
     if ( defined $computed && $self->caching ) {
         if ( ref $template && $self->cache_stringrefs ) {

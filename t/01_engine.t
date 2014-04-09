@@ -19,6 +19,7 @@ class_api_ok $module, qw{
     expires
     delimiters
     cache_stringrefs
+    prepend
     process
 };
 
