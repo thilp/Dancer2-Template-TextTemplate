@@ -2,6 +2,9 @@ Revision history for Dancer2-Template-TextTemplate
 
 {{$NEXT}}
 
+0.2       2014-04-10 00:27:31+02:00 Europe/Paris
+
+    - safe, safe_opcodes and safe_disposable options implemented
     - cache_stringrefs option implemented
     - prepend option implemented
     - fixed a bug in render()'s return value that warns only in perl-5.19.x
