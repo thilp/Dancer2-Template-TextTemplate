@@ -178,7 +178,7 @@ has safe => (
 has safe_opcodes => (
     is      => 'rw',
     isa     => ArrayRef[Str],
-    default => sub { [qw[ :default :load ]] },
+    default => sub { [qw[ :default require caller dofile ]] },
     trigger => sub {
         my $self = shift;
         $self->_safe->permit_only(@{ $_[0] });
