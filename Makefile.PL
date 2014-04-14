@@ -12,9 +12,12 @@ use ExtUtils::MakeMaker 6.30;
 my %WriteMakefileArgs = (
   "ABSTRACT" => "Text::Template engine for Dancer2",
   "AUTHOR" => "Thibaut Le Page <thilp\@cpan.org>",
-  "BUILD_REQUIRES" => {},
+  "BUILD_REQUIRES" => {
+    "Module::Build" => "0.3601"
+  },
   "CONFIGURE_REQUIRES" => {
-    "ExtUtils::MakeMaker" => "6.30"
+    "ExtUtils::MakeMaker" => "6.30",
+    "Module::Build" => "0.3601"
   },
   "DISTNAME" => "Dancer2-Template-TextTemplate",
   "EXE_FILES" => [],
@@ -56,6 +59,7 @@ my %FallbackPrereqs = (
   "Dancer2::Core::Types" => 0,
   "File::Temp" => 0,
   "IPC::System::Simple" => 0,
+  "Module::Build" => "0.3601",
   "Moo" => 0,
   "MooX::Types::MooseLike::Base" => 0,
   "Safe" => "2.14",
