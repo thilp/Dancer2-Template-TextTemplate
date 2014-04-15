@@ -11,7 +11,6 @@ my %module_build_args = (
     "Module::Build" => "0.3601"
   },
   "configure_requires" => {
-    "ExtUtils::MakeMaker" => "6.30",
     "Module::Build" => "0.3601"
   },
   "dist_abstract" => "Text::Template engine for Dancer2",
@@ -19,7 +18,7 @@ my %module_build_args = (
     "Thibaut Le Page <thilp\@cpan.org>"
   ],
   "dist_name" => "Dancer2-Template-TextTemplate",
-  "dist_version" => "1.0",
+  "dist_version" => "1.1",
   "license" => "perl",
   "module_name" => "Dancer2::Template::TextTemplate",
   "recommends" => {},
