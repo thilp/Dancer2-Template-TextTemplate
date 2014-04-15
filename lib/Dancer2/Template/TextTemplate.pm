@@ -1,7 +1,7 @@
 package Dancer2::Template::TextTemplate;
 # ABSTRACT: Text::Template engine for Dancer2
 
-use 5.008_009;
+use 5.010_000;
 use strict;
 use warnings;
 

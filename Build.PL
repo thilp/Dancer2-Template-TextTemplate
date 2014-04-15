@@ -18,7 +18,7 @@ my %module_build_args = (
     "Thibaut Le Page <thilp\@cpan.org>"
   ],
   "dist_name" => "Dancer2-Template-TextTemplate",
-  "dist_version" => "1.001",
+  "dist_version" => "1.002",
   "license" => "perl",
   "module_name" => "Dancer2::Template::TextTemplate",
   "recommends" => {},
@@ -30,11 +30,11 @@ my %module_build_args = (
     "Dancer2::Core::Types" => 0,
     "Moo" => 0,
     "MooX::Types::MooseLike::Base" => 0,
-    "Safe" => "2.14",
+    "Safe" => "2.26",
     "Scalar::Util" => 0,
     "Text::Template" => "1.46",
     "namespace::clean" => 0,
-    "perl" => "5.008_009",
+    "perl" => "5.010_000",
     "strict" => 0,
     "warnings" => 0
   },

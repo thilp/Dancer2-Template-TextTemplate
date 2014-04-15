@@ -2,6 +2,13 @@ Revision history for Dancer2-Template-TextTemplate
 
 {{$NEXT}}
 
+    - require perl-5.10.0 instead of perl-5.8.9:
+      Perl 5.8.9's "warnings" pragma uses "Carp", which calls eval(). Since
+      "use warnings" is (rightfully imho) a default in the
+      D2::T::TextTemplate's "prepend" option, and since eval() is (even more
+      rightfully) forbidden by default in a Safe compartment, I see no other
+      solution.
+
 1.001     2014-04-15 05:57:08+02:00 Europe/Paris
 
     - make changes introduced by 1.0 official
