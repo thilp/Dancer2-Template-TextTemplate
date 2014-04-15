@@ -2,8 +2,15 @@ Revision history for Dancer2-Template-TextTemplate
 
 {{$NEXT}}
 
+    - make changes introduced by 1.0 official
+    - remove ExtUtils::MakeMaker dependency
+
 1.0       2014-04-14 02:57:57+02:00 Europe/Paris (TRIAL RELEASE)
 
+    - replace the ":load" optag by the "require", "caller" and "dofile"
+      opcodes (perl-5.8.9 version of the Opcode module doesn't define ":load")
+    - requires IPC::System::Simple for "use autodie ':all'" in tests
+    - add Module::Build
     - fix POD errors
 
 0.2       2014-04-10 00:27:31+02:00 Europe/Paris

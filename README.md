@@ -4,7 +4,7 @@ Dancer2::Template::TextTemplate - Text::Template engine for Dancer2
 
 # VERSION
 
-version 1.0
+version 1.001
 
 # SYNOPSIS
 
