@@ -2,6 +2,8 @@ Revision history for Dancer2-Template-TextTemplate
 
 {{$NEXT}}
 
+    - bump version to make it an official release
+
 1.002     2014-04-15 23:50:09+02:00 Europe/Paris (TRIAL RELEASE)
 
     - require perl-5.10.0 instead of perl-5.8.9:
