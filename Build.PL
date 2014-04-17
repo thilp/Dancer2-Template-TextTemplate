@@ -18,7 +18,7 @@ my %module_build_args = (
     "Thibaut Le Page <thilp\@cpan.org>"
   ],
   "dist_name" => "Dancer2-Template-TextTemplate",
-  "dist_version" => "1.002",
+  "dist_version" => "1.003",
   "license" => "perl",
   "module_name" => "Dancer2::Template::TextTemplate",
   "recommends" => {},
