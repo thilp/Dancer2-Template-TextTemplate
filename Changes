@@ -2,6 +2,8 @@ Revision history for Dancer2-Template-TextTemplate
 
 {{$NEXT}}
 
+1.003     2014-04-17 19:04:56+02:00 Europe/Paris
+
     - bump version to make it an official release
 
 1.002     2014-04-15 23:50:09+02:00 Europe/Paris (TRIAL RELEASE)
